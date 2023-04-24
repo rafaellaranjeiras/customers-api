@@ -29,18 +29,21 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
     private CustomerRepository customerRepository;
+	
+	@Autowired
+	private CustomerConverter customerConverter;
 
 	@Override
 	public Page<CustomerDto> listCustomers(Pageable pageable) {
 		Page<Customer> entities = customerRepository.findAll(pageable);
-		List<CustomerDto> dtos = CustomerConverter.toDTO(entities.getContent());
+		List<CustomerDto> dtos = customerConverter.toDTO(entities.getContent());
 		return new PageImpl<>(dtos, pageable, entities.getTotalElements());
 	}
 	
 	@Override
 	public CustomerDto getCustomer(Long id) {
-		Customer entity = findById(id);
-		return CustomerConverter.toDTO(entity);
+		Customer entity = getEntityById(id);
+		return customerConverter.toDTO(entity);
 	}
 	
 	@Transactional
@@ -51,8 +54,8 @@ public class CustomerServiceImpl implements CustomerService {
 		documentNumberValidation(dto.getDocumentNumber());
 		if(dto.getStatus() == null)
 			dto.setStatus(CustomerStatus.ACTIVE.toString());
-		Customer entity = customerRepository.save(CustomerConverter.toEntity(dto));
-		return CustomerConverter.toDTO(entity);		
+		Customer entity = customerRepository.save(customerConverter.toEntity(dto));
+		return customerConverter.toDTO(entity);		
 	}
 
 	@Override
@@ -62,7 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public CustomerDto updateCustomer(Long id, CustomerDto dto) {
-		Customer entity = findById(id);	
+		Customer entity = getEntityById(id);	
 		if(dto.getId() != null && !dto.getId().equals(entity.getId()))
 			throw new IllegalArgumentException("Invalid id.");
 		if(!dto.getDocumentNumber().equals(entity.getDocumentNumber())
@@ -70,18 +73,23 @@ public class CustomerServiceImpl implements CustomerService {
 			throw new IllegalStateException("Document Number already registered.");
 		documentNumberValidation(dto.getDocumentNumber());
 		
-		Customer newEntity = CustomerConverter.toEntity(dto);
+		Customer newEntity = customerConverter.toEntity(dto);
 		newEntity.setId(id);
 		customerRepository.save(newEntity);
 		
-		return CustomerConverter.toDTO(newEntity);		
+		return customerConverter.toDTO(newEntity);		
 	}
 	
 	@Override
 	public CustomerDto patchCustomer(Long id, JsonPatch patch) {
-		CustomerDto dto = CustomerConverter.toDTO(findById(id));
+		CustomerDto dto = customerConverter.toDTO(getEntityById(id));
 		CustomerDto patched = applyPatch(patch, dto);
 		return updateCustomer(id, patched);
+	}
+	
+	@Override
+	public Customer getEntityById(Long id) {
+		return customerRepository.findById(id).orElseThrow();
 	}
 	
 	private CustomerDto applyPatch(JsonPatch patch, CustomerDto dto) {
@@ -94,10 +102,6 @@ public class CustomerServiceImpl implements CustomerService {
 		} catch (JsonProcessingException  e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
-	}
-
-	private Customer findById(Long id) {
-		return customerRepository.findById(id).orElseThrow();
 	}
 	
 	private void documentNumberValidation(String documentNumber) {
