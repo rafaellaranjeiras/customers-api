@@ -1,4 +1,4 @@
-package com.example.service.impl;
+package com.example.service.v1;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -13,8 +13,10 @@ import com.example.model.repository.PaymentCardRepository;
 import com.example.service.CustomerService;
 import com.example.service.PaymentCardService;
 
+import jakarta.transaction.Transactional;
+
 @Service
-public class PaymentCardServiceImpl implements PaymentCardService {
+public class PaymentCardServiceV1 implements PaymentCardService {
 	
 	@Autowired
 	private PaymentCardRepository paymentCardRepository;
@@ -46,6 +48,12 @@ public class PaymentCardServiceImpl implements PaymentCardService {
 		if(!entity.getCustomer().getId().equals(customerId))
 			throw new NoSuchElementException();
 		return cardConverter.toDto(entity);
+	}
+
+	@Transactional
+	@Override
+	public void deleteCard(Long customerId, Long cardId) {
+		paymentCardRepository.deleteByIdAndCustomerId(cardId, customerId);		
 	}
 
 }

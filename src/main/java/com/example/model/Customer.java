@@ -1,14 +1,18 @@
 package com.example.model;
 
 import java.util.Date;
+import java.util.List;
 
 import com.example.common.enums.CustomerStatus;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -41,5 +45,9 @@ public class Customer {
 
     @Column(name = "status", columnDefinition = "VARCHAR(1) DEFAULT 'A'")
     private CustomerStatus status;
+    
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    List<PaymentCard> paymentCards;
+    
 
 }

@@ -9,5 +9,6 @@ import com.example.model.PaymentCard;
 public interface PaymentCardRepository extends JpaRepository<PaymentCard, Long> {
 	
 	List<PaymentCard> findByCustomerId(Long customerId);
+	void deleteByIdAndCustomerId(Long idLong, Long customerId);
 
 }

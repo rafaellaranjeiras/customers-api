@@ -9,5 +9,6 @@ public interface PaymentCardService {
 	List<PaymentCardDto> findByCustomer(Long customerId);
 	PaymentCardDto createCard(Long customerId, PaymentCardDto dto);
 	PaymentCardDto getCard(Long customerId, Long cardId);
+	void deleteCard(Long customerId, Long cardId);
 
 }

@@ -1,4 +1,4 @@
-package com.example.service.impl;
+package com.example.service.v1;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import jakarta.transaction.Transactional;
 
 @Service
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceV1 implements CustomerService {
 	
 	@Autowired
     private CustomerRepository customerRepository;
