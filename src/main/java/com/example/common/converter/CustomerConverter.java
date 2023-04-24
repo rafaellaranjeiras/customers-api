@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import com.example.common.dto.CustomerDto;
+import com.example.common.dto.CustomerElasticDto;
 import com.example.common.enums.CustomerStatus;
 import com.example.model.Customer;
 
@@ -37,10 +38,18 @@ public class CustomerConverter {
                 .documentNumber(dto.getDocumentNumber())
                 .build();
     }
+    
     public List<Customer> toEntity(List<CustomerDto> dtos) {
         return dtos.stream()
                 .map(this::toEntity)
                 .collect(Collectors.toList());
+    }
+    
+    public CustomerElasticDto toElasticDto(Customer entity) {
+    	CustomerElasticDto dto = new CustomerElasticDto();
+    	dto.setFullnNome(entity.getFullName());
+    	dto.setId(entity.getId());
+    	return dto;
     }
 
 }

@@ -5,10 +5,19 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://localhost:3306/customers?allowPublicKeyRetrieval=true
+    url: jdbc:mysql://35.198.63.191:3306/customers
     username: root
-    password: 123456
+    password: Zb`V~-qt<+qtL0Qe
     driverClassName: com.mysql.jdbc.Driver
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: America/Sao_Paulo
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+      
+elasticsearch:
+  host: https://b16685fc114e4dd0bbff3f7adcd7ea81.us-central1.gcp.cloud.es.io:443/search-customer
+  api-key: SktMMHRJY0JvX05DWmpKMXZOMkQ6ejFNckV5S3BSbVNWWTlrUWE0NXhvQQ==

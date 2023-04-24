@@ -4,10 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import com.example.common.enums.CustomerStatus;
+import com.example.model.listener.CustomerListener;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +28,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+@EntityListeners(CustomerListener.class)
 @Table(name = "customer")
 public class Customer {
 

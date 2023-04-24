@@ -10,7 +10,6 @@ import com.example.common.converter.PaymentCardConverter;
 import com.example.common.dto.PaymentCardDto;
 import com.example.model.PaymentCard;
 import com.example.model.repository.PaymentCardRepository;
-import com.example.service.CustomerService;
 import com.example.service.PaymentCardService;
 
 import jakarta.transaction.Transactional;
@@ -25,7 +24,7 @@ public class PaymentCardServiceV1 implements PaymentCardService {
 	private PaymentCardConverter cardConverter;
 	
 	@Autowired
-	private CustomerService customerService;
+	private CustomerServiceV1 customerService;
 
 	@Override
 	public List<PaymentCardDto> findByCustomer(Long customerId) {
