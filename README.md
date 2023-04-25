@@ -26,5 +26,6 @@ The project is designed with a scalable architecture in mind, striving to create
 ## API Documentation and Live Application
 
 Access the API documentation through the following Swagger link: [Soon]()
+
 This documentation includes a Enviroment to a live application demo.
 
