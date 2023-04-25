@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.common.converter.CustomerConverter;
 import com.example.common.dto.CustomerDto;
+import com.example.common.dto.CustomerElasticDto;
 import com.example.common.enums.CustomerStatus;
+import com.example.elastic.CustomerElastic;
 import com.example.model.Customer;
 import com.example.model.repository.CustomerRepository;
 import com.example.service.CustomerService;
@@ -32,6 +34,9 @@ public class CustomerServiceV1 implements CustomerService {
 	
 	@Autowired
 	private CustomerConverter customerConverter;
+	
+	@Autowired
+	private CustomerElastic customerElastic;
 
 	@Override
 	public Page<CustomerDto> listCustomers(Pageable pageable) {
@@ -62,7 +67,8 @@ public class CustomerServiceV1 implements CustomerService {
 	public void deleteCustomer(Long id) {
 		customerRepository.deleteById(id);		
 	}
-
+	
+	@Transactional
 	@Override
 	public CustomerDto updateCustomer(Long id, CustomerDto dto) {
 		Customer entity = getEntityById(id);	
@@ -75,6 +81,7 @@ public class CustomerServiceV1 implements CustomerService {
 		
 		Customer newEntity = customerConverter.toEntity(dto);
 		newEntity.setId(id);
+		newEntity.setPaymentCards(entity.getPaymentCards());
 		customerRepository.save(newEntity);
 		
 		return customerConverter.toDTO(newEntity);		
@@ -90,6 +97,14 @@ public class CustomerServiceV1 implements CustomerService {
 	@Override
 	public Customer getEntityById(Long id) {
 		return customerRepository.findById(id).orElseThrow();
+	}
+	
+	@Override
+	public Page<CustomerElasticDto> searchCustomers(String term, Pageable pageable) {
+		List<CustomerElasticDto> content =
+				customerElastic.searchCustomerByName(term, pageable.getPageNumber(), pageable.getPageSize());
+		Page<CustomerElasticDto> page = new PageImpl<>(content, pageable, -1);
+		return page;
 	}
 	
 	private CustomerDto applyPatch(JsonPatch patch, CustomerDto dto) {
@@ -108,6 +123,5 @@ public class CustomerServiceV1 implements CustomerService {
 		if(!StringUtil.isAlphanumeric(documentNumber)
 				|| !ValidationUtil.isCPFValid(documentNumber))
 			throw new IllegalArgumentException("Invalid document number.");
-	}	
-
+	}
 }

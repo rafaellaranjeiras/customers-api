@@ -6,7 +6,7 @@ import com.example.common.dto.CustomerElasticDto;
 
 public interface CustomerElastic {
 	
-	List<CustomerElasticDto> searchCustomerByName(String name);
+	List<CustomerElasticDto> searchCustomerByName(String term, int page, int size);
 	void addCustomer(CustomerElasticDto dto);
 
 }

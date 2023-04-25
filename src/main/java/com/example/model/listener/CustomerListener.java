@@ -1,6 +1,7 @@
 package com.example.model.listener;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.example.common.converter.CustomerConverter;
@@ -18,6 +19,7 @@ public class CustomerListener {
 	@Autowired
 	private CustomerConverter customerConverter;
 	
+	@Async
 	@PostPersist
 	public void prePersist(Customer entity) {
 		customerElastic.addCustomer(

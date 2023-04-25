@@ -47,7 +47,7 @@ public class CustomerConverter {
     
     public CustomerElasticDto toElasticDto(Customer entity) {
     	CustomerElasticDto dto = new CustomerElasticDto();
-    	dto.setFullnNome(entity.getFullName());
+    	dto.setFullname(entity.getFullName());
     	dto.setId(entity.getId());
     	return dto;
     }

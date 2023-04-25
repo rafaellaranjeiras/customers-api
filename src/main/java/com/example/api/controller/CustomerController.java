@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.common.dto.CustomerDto;
+import com.example.common.dto.CustomerElasticDto;
 import com.example.service.CustomerService;
 import com.example.util.RestResponse;
 import com.github.fge.jsonpatch.JsonPatch;
@@ -41,6 +44,15 @@ public class CustomerController extends AbstractController {
 	@GetMapping("{id}")
 	public RestResponse<CustomerDto> getCustomer(@PathVariable Long id) {		
 		CustomerDto data = customerService().getCustomer(id);
+		return getRestResponse(data);				
+	}
+	
+	@GetMapping("/search")
+	public RestResponse<List<CustomerElasticDto>> searchCustomers(@RequestParam String q,
+																  @RequestHeader(defaultValue = "0") int __page,
+																  @RequestHeader(defaultValue = "30") int __size) {		
+		PageRequest pageRequest = PageRequest.of(__page, __size);
+		Page<CustomerElasticDto> data = customerService().searchCustomers(q, pageRequest);
 		return getRestResponse(data);				
 	}
 	

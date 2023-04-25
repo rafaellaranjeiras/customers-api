@@ -19,17 +19,20 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerElasticImpl extends AbstractElasticSearchClient implements CustomerElastic {
 	
 	@Override
-	public List<CustomerElasticDto> searchCustomerByName(String name) {
-		try {
+	public List<CustomerElasticDto> searchCustomerByName(String term, int page, int size) {
+		try {			
 			SearchResponse<CustomerElasticDto> search = client.search(s -> s
-					.index("products")
-					.query(q -> q
-							.term(t -> t
-									.field("name")
-									.value(v -> v.stringValue(name))
-									)),
-					CustomerElasticDto.class);
-			
+                    .index("search-customer")
+                    .from(page * size)
+                    .size(size)
+                    .query(q -> q
+                            .matchPhrasePrefix(t -> t
+                                    .field("fullname")
+                                    .query(term)
+                            )
+                    ),
+                    CustomerElasticDto.class);
+
 			return search.hits().hits().stream()
 					.map(hit -> hit.source())
 					.collect(Collectors.toList());
@@ -42,12 +45,10 @@ public class CustomerElasticImpl extends AbstractElasticSearchClient implements 
 	@Override
 	public void addCustomer(CustomerElasticDto dto) {
 		try {
-			post("customer", dto, dto.getId().toString());
+			post("search-customer", dto, dto.getId().toString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+			log.error(e.getMessage(), e);
+		}		
 	}
 
 

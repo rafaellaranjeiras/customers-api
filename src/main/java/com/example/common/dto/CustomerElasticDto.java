@@ -6,6 +6,6 @@ import lombok.Data;
 public class CustomerElasticDto {
 	
 	private Long id;
-	private String fullnNome;
+	private String fullname;
 
 }

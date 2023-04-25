@@ -2,8 +2,11 @@ package com.example.elastic;
 
 import java.io.IOException;
 
+import org.apache.http.Header;
 import org.apache.http.HttpHost;
+import org.apache.http.message.BasicHeader;
 import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +29,14 @@ public abstract class AbstractElasticSearchClient {
 	
 	@PostConstruct
 	private void setup() {
-		RestClient restClient = RestClient.builder(
-				new HttpHost(elasticHost, 9200)).build();
+		RestClientBuilder rest = RestClient.builder(
+				new HttpHost(elasticHost, 443, "https"));		
+		Header[] header =
+			    new Header[]{new BasicHeader("Authorization",
+			        "ApiKey " + apiKey)};
+		rest.setDefaultHeaders(header);
 		ElasticsearchTransport transport = new RestClientTransport(
-				restClient, new JacksonJsonpMapper());
+				rest.build(), new JacksonJsonpMapper());
 		client = new ElasticsearchClient(transport);
 	}
 	
