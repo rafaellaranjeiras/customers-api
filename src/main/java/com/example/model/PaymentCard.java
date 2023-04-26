@@ -1,6 +1,6 @@
 package com.example.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,9 +36,9 @@ public class PaymentCard {
 	@Column(name="card_number", nullable = false, columnDefinition = "VARCHAR(20)")
 	private String cardNumber;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="expiration_date", nullable = false, columnDefinition = "TIMESTAMP")
-	private Date expirationDate;
+	@Temporal(TemporalType.DATE)
+	@Column(name="expiration_date", nullable = false, columnDefinition = "DATE")
+	private LocalDate expirationDate;
 
 	@Column(name="holder_name", nullable = false, columnDefinition = "VARCHAR(100)")
 	private String holderName;

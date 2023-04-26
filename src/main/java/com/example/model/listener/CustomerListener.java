@@ -9,6 +9,7 @@ import com.example.elastic.CustomerElastic;
 import com.example.model.Customer;
 
 import jakarta.persistence.PostPersist;
+import jakarta.persistence.PostRemove;
 
 @Component
 public class CustomerListener {
@@ -21,9 +22,15 @@ public class CustomerListener {
 	
 	@Async
 	@PostPersist
-	public void prePersist(Customer entity) {
+	public void postPersist(Customer entity) {
 		customerElastic.addCustomer(
 				customerConverter.toElasticDto(entity));
+	}
+	
+	@Async
+	@PostRemove
+	public void postRemove(Customer entity) {
+		customerElastic.removeCustomer(entity.getId());
 	}
 
 }

@@ -3,8 +3,8 @@ package com.example.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -57,7 +57,7 @@ public class CustomerServiceTest {
 		for(int i=1; i<=30; i++) {
 			Customer entity = new Customer();
 			entity.setId(Long.valueOf(i));
-			entity.setBirthDate(new Date());
+			entity.setBirthDate(LocalDate.now());
 			entity.setFullName("full name");
 			entity.setDocumentNumber("12345678901");
 			entity.setStatus(CustomerStatus.ACTIVE);

@@ -1,4 +1,4 @@
-package com.example.common.converter;
+package com.example.model.converter;
 
 import com.example.common.enums.CustomerStatus;
 

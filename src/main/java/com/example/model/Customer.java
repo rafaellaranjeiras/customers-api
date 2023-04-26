@@ -1,6 +1,6 @@
 package com.example.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.example.common.enums.CustomerStatus;
@@ -36,9 +36,9 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "birth_date", columnDefinition = "TIMESTAMP")
-    private Date birthDate;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "birth_date", columnDefinition = "DATE")
+    private LocalDate birthDate;
 
     @Column(name = "full_name", columnDefinition = ("VARCHAR(100)"))
     private String fullName;

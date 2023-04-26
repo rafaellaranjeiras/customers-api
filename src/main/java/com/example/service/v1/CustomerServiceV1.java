@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import com.example.common.converter.CustomerConverter;
 import com.example.common.dto.CustomerDto;
@@ -120,8 +121,7 @@ public class CustomerServiceV1 implements CustomerService {
 	}
 	
 	private void documentNumberValidation(String documentNumber) {
-		if(!StringUtil.isAlphanumeric(documentNumber)
-				|| !ValidationUtil.isCPFValid(documentNumber))
-			throw new IllegalArgumentException("Invalid document number.");
+		Assert.isTrue(StringUtil.isAlphanumeric(documentNumber), "Invalid document number.");
+		Assert.isTrue(ValidationUtil.isCPFValid(documentNumber), "Invalid document number.");
 	}
 }

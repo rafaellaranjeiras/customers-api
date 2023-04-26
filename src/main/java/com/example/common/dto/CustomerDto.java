@@ -1,14 +1,16 @@
 package com.example.common.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Schema(name = "Customer Data")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class CustomerDto {
 	private Long id;
 	private String fullName;
 	@JsonFormat(pattern="yyyy-MM-dd")
-    private Date birthDate; 
+    private LocalDate birthDate; 
 	private String documentNumber;
     private String status;
 }

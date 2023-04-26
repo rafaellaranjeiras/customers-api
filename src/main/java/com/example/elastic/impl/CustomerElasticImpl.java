@@ -11,6 +11,7 @@ import com.example.elastic.AbstractElasticSearchClient;
 import com.example.elastic.CustomerElastic;
 
 import co.elastic.clients.elasticsearch._types.ElasticsearchException;
+import co.elastic.clients.elasticsearch.core.DeleteRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,6 +48,18 @@ public class CustomerElasticImpl extends AbstractElasticSearchClient implements 
 		try {
 			post("search-customer", dto, dto.getId().toString());
 		} catch (IOException e) {
+			log.error(e.getMessage(), e);
+		}		
+	}
+
+	@Override
+	public void removeCustomer(Long customerId) {
+		DeleteRequest deleteRequest = DeleteRequest.of(t -> t
+				.id(customerId.toString())
+				.index("search-customer"));
+		try {
+			client.delete(deleteRequest);
+		} catch (ElasticsearchException | IOException e) {
 			log.error(e.getMessage(), e);
 		}		
 	}
