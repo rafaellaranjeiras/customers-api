@@ -2,6 +2,8 @@ package com.example.api.config;
 
 import java.util.NoSuchElementException;
 
+import javax.naming.AuthenticationException;
+
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -44,6 +46,12 @@ public class ExceptionHandling extends AbstractController {
 	@ExceptionHandler(NoSuchBeanDefinitionException.class)
 	public RestResponse<Void> handleExceptions(NoSuchBeanDefinitionException ex) {
 		return getRestResponse("Not found.");
+	}
+	
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ExceptionHandler(AuthenticationException.class)
+	public RestResponse<Void> handleExceptions(AuthenticationException ex) {
+		return getRestResponse();
 	}
 	
 	@ResponseStatus(HttpStatus.CONFLICT)
