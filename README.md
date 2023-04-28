@@ -4,6 +4,7 @@ This project is a REST microservice in Java using the Spring Framework. It featu
 
 ## Features
 
+- Authentication
 - Customer registration
 - Payment card management
 - Unit tests included
@@ -12,12 +13,16 @@ This project is a REST microservice in Java using the Spring Framework. It featu
 
 - Java 17
 - Spring Boot
-- Spring Framework (Data, Web, Security, Test, Validation, OpenAPI)
+- Spring Framework (Data, Web, Security, Test, Validation, Doc)
 - Elasticsearch
+- Firebase Auth
+- OAuth2
 - Lombok
 - Jakson
 - JUnit
 - MySQL
+- Swagger
+- Google Cloud
 
 ## Architecture
 
@@ -25,7 +30,9 @@ The project is designed with a scalable architecture in mind, striving to create
 
 ## API Documentation and Live Application
 
-Access the API documentation through the following Swagger link: [Soon]()
+Access the API documentation and live demo through the following link: [Soon]()
 
-This documentation includes a Enviroment to a live application demo.
+## Contact
+
+Contact me by e-mail: [ralaranjeiras@gmail.com](mailto:ralaranjeiras@gmail.com)
 
