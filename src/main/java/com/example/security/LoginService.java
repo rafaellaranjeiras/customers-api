@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.example.security.dto.IdentityLoginRequestDto;
+import com.example.security.dto.LoginResponseDto;
+
 @Service
 public class LoginService {
 	
