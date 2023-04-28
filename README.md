@@ -9,7 +9,7 @@ This project is a REST microservice in Java using the Spring Framework. It featu
 - Payment card management
 - Unit tests included
 
-## Technologies
+## Technologies & Frameworks
 
 - Java 17
 - Spring Boot
