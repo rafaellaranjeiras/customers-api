@@ -12,11 +12,11 @@ public class OpenApiOperationCustomizer implements OperationCustomizer {
 
 	@Override
 	public Operation customize(Operation operation, HandlerMethod handlerMethod) {
-		for(Parameter parameter: operation.getParameters()) {
-			if (parameter.getName().equals("version")) {
-	           parameter.setExample("v1");
-	        }
-		}
+		if(operation.getParameters() == null)
+			return operation;
+		for(Parameter parameter: operation.getParameters())
+			if (parameter.getName().equals("version"))
+	           parameter.setExample("v1");		
         return operation;
 	}
 

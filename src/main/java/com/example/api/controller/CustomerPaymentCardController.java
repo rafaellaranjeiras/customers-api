@@ -17,7 +17,7 @@ import com.example.util.RestResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Customer's Payment Cards")
+@Tag(name = "3. Customer's Payment Cards")
 @RestController
 @RequestMapping("{version}/customers/{customerId}/cards")
 public class CustomerPaymentCardController extends AbstractController {

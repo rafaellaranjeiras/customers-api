@@ -27,7 +27,7 @@ import com.github.fge.jsonpatch.JsonPatch;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Customer")
+@Tag(name = "2. Customer")
 @RestController
 @RequestMapping("{version}/customers")
 public class CustomerController extends AbstractController {
